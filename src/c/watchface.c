@@ -400,9 +400,7 @@ static void layer_update_callback(Layer *me, GContext* ctx) {
       
       carNum++;
     }
-    
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Car start %d", trafficStart[carLine]);
-    
+        
     carScanline += 4;
     carLine += 1;
   }
@@ -509,24 +507,22 @@ static void layer_update_callback(Layer *me, GContext* ctx) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "at %d, %d and %d x %d", timeX, timeY, expectedWidth, expectedHeight);
   
   //Snoop out where we *expect* the time to be and mirror it in the water
-  /*
   GBitmap *fb = graphics_capture_frame_buffer(ctx);
-  
   int x, y;
   for(y = timeY; y < timeY + expectedHeight; y++){
-    GBitmapDataRowInfo info = gbitmap_get_data_row_info(fb, y);
-    if(timeX > info.min_x) continue; //Ignore this row
+    int mirrorYPosition = 125 + (125 - y);
+    if(mirrorYPosition > HEIGHT) continue;    
     
-    //Mirror over little below bottom of beach (i.e. 128)
-    int mirrorYPosition = (128 - y) + 128;
-    if(mirrorYPosition > HEIGHT) continue;
+    GBitmapDataRowInfo info = gbitmap_get_data_row_info(fb, y);
+    if(timeX > info.max_x || info.min_x > (timeX + expectedWidth)) continue; //Ignore this row
     GBitmapDataRowInfo mirrorInfo = gbitmap_get_data_row_info(fb, mirrorYPosition);
     
     int maxX = info.max_x;
     if(timeY + expectedWidth < maxX) maxX = timeY + expectedWidth;
     
+    int xOffset = (rand() % 3) + -1;
     for(x = timeX; x < maxX; x++){            
-      int newX = (rand() % 5) + -2 + x;
+      int newX = xOffset + x;
       
       if(mirrorInfo.min_x > newX || mirrorInfo.max_x < newX) continue; //Not important
       
@@ -539,9 +535,7 @@ static void layer_update_callback(Layer *me, GContext* ctx) {
       }
     }
   }
-  
   graphics_release_frame_buffer(ctx, fb);
-  */
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "done handling layer update");
 }
