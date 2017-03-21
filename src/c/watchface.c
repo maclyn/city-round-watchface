@@ -2,6 +2,15 @@
 #include <pebble.h>
 #define FPS 1000/10
 
+/* TODO before release
+ * Performance/power improvements
+ * Centering of time
+ * Addition of day of week
+ * Proper time of day support
+ * Color tweaking
+ * Proper metadata 
+ */
+
 /* Constants region */
 int WIDTH = PBL_IF_ROUND_ELSE(180, 144);
 int HEIGHT = PBL_IF_ROUND_ELSE(180, 168);
