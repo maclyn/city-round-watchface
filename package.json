@@ -152,6 +152,7 @@
         },
         "sdkVersion": "3",
         "targetPlatforms": [
+            "basalt",
             "chalk"
         ],
         "uuid": "6c4d147b-25a5-45cd-8ea0-f58d09d60c93",
